@@ -750,6 +750,34 @@ body, html {
   color: #fff; 
 }
 
+footer {
+  text-align: center;
+  padding: 20px;
+  background-color: #929292; /* Dark background */
+  color: #fff; /* White text */
+}
+
+#socials {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+#socials a {
+  text-decoration: none;
+}
+
+#socials img {
+  width: 40px; /* Adjust icon size */
+  height: 40px;
+  transition: transform 0.3s;
+}
+
+#socials img:hover {
+  transform: scale(1.2); /* Slight zoom on hover */
+}
+
+
 
 
 
