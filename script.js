@@ -36,7 +36,8 @@ runButton.addEventListener('click', () => {
     runButton.style.display = 'none'; 
     consoleContainer.classList.remove('console-middle');
     consoleContainer.classList.add('console-bottom'); 
-    introSection.classList.remove('hiddenint'); 
+    introSection.classList.remove('hiddenint');
+    consoleContainer.classList.add('hidden');
 });
 
 const observer = new IntersectionObserver((entries) => {
@@ -68,6 +69,36 @@ document.getElementById("scroll-to-about").addEventListener("click", () => {
     const aboutMeSection = document.getElementById("about-me");
     aboutMeSection.scrollIntoView({ behavior: "smooth" });
 });
+const slideIndices = {};
+function navigateCarousel(direction, carouselId) {
+    const carousel = document.querySelector(`#${carouselId} .carousel`);
+    const items = carousel.querySelectorAll('.carousel-item');
+    if (!(carouselId in slideIndices)) {
+        slideIndices[carouselId] = 0;
+    }
+
+    let activeIndex = slideIndices[carouselId];
+    items[activeIndex].classList.remove('active');
+    activeIndex += direction;
+    if (activeIndex < 0) {
+        activeIndex = items.length - 1; 
+    } else if (activeIndex >= items.length) {
+        activeIndex = 0; 
+    }
+    items[activeIndex].classList.add('active');
+    slideIndices[carouselId] = activeIndex;
+}
+
+document.querySelectorAll('#carousel-one .carousel-item')[0].classList.add('active');
+document.querySelectorAll('#carousel-two .carousel-item')[0].classList.add('active');
+
+
+
+
+
+
+
+
 
 
 
