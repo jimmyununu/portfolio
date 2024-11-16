@@ -194,9 +194,6 @@ body, html {
     text-align: left;
 }
 
-.part1 {
-    
-}
 .part2 {
     display: flex; 
     align-items: center; 
@@ -790,35 +787,35 @@ footer {
   align-self: center;
 }
 
-/* Style the header and navigation */
+
 header {
-  background-color: #333; /* Background color for the navbar */
+  background-color: #333; 
   padding: 10px 20px;
-  position: fixed; /* Fix the navbar at the top */
+  position: fixed; 
   top: 0;
   width: 100%;
-  z-index: 1000; /* Ensure it stays on top of other content */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: add shadow for depth */
+  z-index: 1000; 
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
 }
 
-/* Style the navigation bar */
+
 #top-nav ul {
   list-style: none;
   margin: 0;
   padding: 0;
   display: flex;
-  justify-content: center; /* Center-align navigation items */
-  gap: 20px; /* Space between navigation items */
+  justify-content: center; 
+  gap: 20px; 
 }
 
 #top-nav ul li {
   display: inline;
 }
 
-/* Style the navigation links */
+
 #top-nav ul li a {
   text-decoration: none;
-  color: white; /* Text color */
+  color: white; 
   font-size: 16px;
   font-weight: bold;
   padding: 10px 15px;
@@ -826,15 +823,14 @@ header {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Hover effect for navigation links */
 #top-nav ul li a:hover {
-  background-color: #ffdd57; /* Highlight color */
-  color: #333; /* Contrast color */
+  background-color: #ffdd57; 
+  color: #333; 
 }
 
-/* Add some spacing for the main content to avoid overlap */
+
 body {
-  padding-top: 60px; /* Adjust padding to fit the navbar height */
+  padding-top: 60px; 
 }
 
 #t1{
@@ -883,8 +879,8 @@ canvas {
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 1; /* Keep it behind other content */
-  pointer-events: none; /* Allow interactions with the content */
+  z-index: 1; 
+  pointer-events: none; 
 }
 
 
