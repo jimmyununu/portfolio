@@ -853,26 +853,26 @@ body {
 }
 
 #t7{
-  transition-delay: 1200ms;
+  transition-delay: 200ms;
 }
 #t8{
-  transition-delay: 1400ms;
+  transition-delay: 400ms;
 }
 #t9{
-  transition-delay: 1600ms;
+  transition-delay: 600ms;
 }
 
 #t10{
-  transition-delay: 1800ms;
+  transition-delay: 800ms;
 }
 #t11{
-  transition-delay: 2000ms;
+  transition-delay: 1000ms;
 }
 #t12{
-  transition-delay: 2200ms;
+  transition-delay: 200ms;
 }
 #t13{
-  transition-delay: 2400ms;
+  transition-delay: 400ms;
 }
 
 canvas {
