@@ -172,12 +172,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const canvas = document.getElementById("particle-canvas");
     const ctx = canvas.getContext("2d");
 
-    let currentSize = 50; // Initial size of the black hole in pixels
-    const visibleElements = new Set(); // Track elements currently in the viewport
-    const particlesArray = []; // Store all particles
-    const maxRadius = 1.4; // Maximum radius of particles
+    let currentSize = 50;
+    const visibleElements = new Set();
+    const particlesArray = [];
+    const maxRadius = 1.4;
+    const MAX_PARTICLES = 100;
 
-    // Resize canvas to fit the screen
     function resizeCanvas() {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
@@ -186,110 +186,108 @@ document.addEventListener("DOMContentLoaded", () => {
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
 
-    // Use IntersectionObserver to manage visible elements
     const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
             if (entry.isIntersecting) {
-                visibleElements.add(entry.target); // Add element to visible set
-                entry.target.classList.add("show"); // Optional for styling
+                visibleElements.add(entry.target);
+                entry.target.classList.add("show");
             } else {
-                visibleElements.delete(entry.target); // Remove element if it leaves the viewport
+                visibleElements.delete(entry.target);
             }
         });
     });
 
-    // Observe each content element
     contentElements.forEach((element) => observer.observe(element));
 
     blackHoleButton.addEventListener("click", () => {
-        // Show the black hole and play sound
         blackHole.style.display = "block";
         blackHoleSound.play();
-        
+
+        const growBlackHole = () => {
+            let size = 50; // Initial size
+            const maxSize = Math.min(window.innerWidth + 2000, window.innerHeight +2000); 
+
+            function grow() {
+                if (size < maxSize) {
+                    size += .1; // Growth rate
+                    blackHole.style.width = `${size}px`;
+                    blackHole.style.height = `${size}px`;
+                    blackHole.style.borderRadius = "50%"; 
+                    requestAnimationFrame(grow);
+                }
+            }
+
+            grow();
+        };
+
+        // Start growing the black hole
+        growBlackHole();
 
         const suckInElements = () => {
             const screenCenterX = window.innerWidth / 2;
             const screenCenterY = window.innerHeight / 2;
 
-            // Animate visible elements dynamically
             Array.from(visibleElements).forEach((element, index) => {
                 setTimeout(() => {
                     const elementRect = element.getBoundingClientRect();
                     const elementCenterX = elementRect.left + elementRect.width / 2;
                     const elementCenterY = elementRect.top + elementRect.height / 2;
 
-                    // Calculate final absolute position for the element
-                    const absoluteX = screenCenterX - elementRect.width / 2;
-                    const absoluteY = screenCenterY - elementRect.height / 2;
+                    const dx = screenCenterX - elementCenterX;
+                    const dy = screenCenterY - elementCenterY;
 
-                    // Apply styles for absolute positioning
+                    // Preserve initial position to prevent jumping
                     element.style.position = "fixed";
                     element.style.left = `${elementRect.left}px`;
                     element.style.top = `${elementRect.top}px`;
-                    element.style.margin = "0"; // Reset margins
-
-                    // Set z-index to make it appear on top
+                    element.style.margin = "0";
                     element.style.zIndex = "1000";
 
-                    // Trigger the movement animation
+                    // Smoothly move element to the black hole center
                     requestAnimationFrame(() => {
-                        element.style.transition = "transform 2.5s ease, opacity 2.5s ease"; // Slower animation duration
-                        element.style.transform = `translate(${absoluteX - elementRect.left}px, ${absoluteY - elementRect.top}px) scale(0)`;
-                        element.style.opacity = "0.8";
+                        element.style.transition = "transform 2.5s ease, opacity 2.5s ease";
+                        element.style.transform = `translate(${dx}px, ${dy}px) scale(0)`;
+                        element.style.opacity = "0";
                     });
 
-                    // Hide the element after animation completes
+                    // Hide the element after animation
                     setTimeout(() => {
                         element.style.display = "none";
-                        visibleElements.delete(element); // Remove element from visible set
+                        visibleElements.delete(element);
 
-                        // Grow the black hole
-                       // currentSize += 4; // Increase size with each element
-                        blackHole.style.width = `${currentSize}px`;
-                        blackHole.style.height = `${currentSize}px`;
-
-                        // Generate particles
                         generateParticles(elementCenterX, elementCenterY);
-                    }, 2500); // Match the animation duration
-                }, index * 500); // Stagger delay
+                    }, 2500); // Match animation duration
+                }, index * 500); // Stagger animation for each element
             });
 
-            // Repeat every 2000ms to dynamically check for new visible elements
             if (visibleElements.size > 0) {
                 setTimeout(suckInElements, 2000);
             }
         };
 
-        suckInElements(); // Start sucking in visible elements
+        // Start sucking in elements
+        suckInElements();
     });
 
-    // Function to generate particles
-    const MAX_PARTICLES = 120; // Maximum number of particles allowed
-
     function generateParticles(x, y) {
-        const particleCount = 2; // Number of particles to generate per element
+        const particleCount = 2;
         for (let i = 0; i < particleCount; i++) {
             if (particlesArray.length >= MAX_PARTICLES) {
-                particlesArray.shift(); // Remove the oldest particle to stay within the limit 
+                particlesArray.shift();
             }
-    
-            const radius = Math.random() * maxRadius + 1; // Random particle size
-            const angle = Math.random() * Math.PI * 2; // Random initial angle
-            const orbitRadius = Math.pow(Math.random(), 2) * 200 + 30; // Weighted towards smaller distances
-    
-            // Speed is inversely proportional to orbitRadius
-            const angularVelocity = 0.09 / orbitRadius; // Faster for smaller orbit distances
-    
-            // Add the new particle to the array
+
+            const radius = Math.random() * maxRadius + 1;
+            const angle = Math.random() * Math.PI * 2;
+            const orbitRadius = Math.pow(Math.random(), 2) * 800 + 30;
+
+            const angularVelocity = 0.09 / orbitRadius;
+
             particlesArray.push({ x, y, radius, angle, orbitRadius, angularVelocity });
         }
-    
-        // Start animating particles
+
         animateParticles();
     }
-    
 
-    // Function to animate particles rotating around the black hole
     function animateParticles() {
         const screenCenterX = window.innerWidth / 2;
         const screenCenterY = window.innerHeight / 2;
@@ -301,16 +299,19 @@ document.addEventListener("DOMContentLoaded", () => {
             particle.x = screenCenterX + particle.orbitRadius * Math.cos(particle.angle);
             particle.y = screenCenterY + particle.orbitRadius * Math.sin(particle.angle);
 
-            // Draw the particle
             ctx.beginPath();
             ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
             ctx.fillStyle = `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`;
             ctx.fill();
         });
-        requestAnimationFrame(animateParticles); 
-        
+        requestAnimationFrame(animateParticles);
     }
 });
+
+
+
+
+
     
     
  
