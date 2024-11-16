@@ -975,6 +975,12 @@ canvas {
   border-radius: 10px;
 }
 
+#eins {
+  width: 50px; /* Set the width */
+  height: 50px; /* Set the height */
+  object-fit: contain; /* Ensures the image retains its aspect ratio */
+}
+
 
 
 
