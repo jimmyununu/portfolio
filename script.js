@@ -93,6 +93,74 @@ document.querySelectorAll('#carousel-one .carousel-item')[0].classList.add('acti
 document.querySelectorAll('#carousel-two .carousel-item')[0].classList.add('active');
 
 
+const canvas = document.getElementById('particle-canvas');
+const ctx = canvas.getContext('2d');
+
+let particlesArray = [];
+const particleCount = 10; 
+const maxRadius = 1; 
+
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+
+class Particle {
+    constructor(x, y, dx, dy, radius) {
+        this.x = x;
+        this.y = y;
+        this.dx = dx; 
+        this.dy = dy; 
+        this.radius = radius;
+    }
+
+    draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = "white"; 
+        ctx.fill();
+    }
+
+    update() {
+        if (this.x + this.radius > canvas.width || this.x - this.radius < 0) {
+            this.dx = -this.dx;
+        }
+        if (this.y + this.radius > canvas.height || this.y - this.radius < 0) {
+            this.dy = -this.dy;
+        }
+        this.x += this.dx;
+        this.y += this.dy;
+        this.draw();
+    }
+}
+
+function initParticles() {
+    particlesArray = [];
+    for (let i = 0; i < particleCount; i++) {
+        const radius = Math.random() * maxRadius + 1;
+        const x = Math.random() * (canvas.width - radius * 2) + radius;
+        const y = Math.random() * (canvas.height - radius * 2) + radius;
+        const dx = (Math.random() - 0.5) * 2; 
+        const dy = (Math.random() - 0.5) * 2; 
+        particlesArray.push(new Particle(x, y, dx, dy, radius));
+    }
+}
+
+function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particlesArray.forEach((particle) => particle.update());
+    requestAnimationFrame(animate);
+}
+
+window.addEventListener('resize', () => {
+    resizeCanvas();
+    initParticles();
+});
+
+resizeCanvas();
+initParticles();
+animate();
+
 
 
 
