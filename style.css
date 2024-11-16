@@ -3,7 +3,7 @@ body, html {
     padding: 0;
     height: 100%;
     width: 100%; 
-    font-family: Arial, sans-serif;
+    font-family: Arital, sans-serif;
     background: black;
     color: white;
     position: relative;
@@ -707,7 +707,7 @@ body, html {
 .section-title {
   font-size: 2.5rem;
   margin-bottom: 30px;
-  color: #ffdd57; 
+  color: #ffffff; 
   text-shadow: 0 0 10px rgba(255, 221, 87, 0.5);
 }
 
@@ -750,18 +750,19 @@ footer {
   bottom: 0; 
   left: 0;
   width: 100%; 
-  background-color: #333; 
+  background-color: transparent; 
   color: white; 
   text-align: center; 
   padding: 10px 0; 
-  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2); 
+  
   z-index: 1000; 
   height: 45px;
 }
 
 #socials {
   display: flex;
-  justify-content: center;
+  justify-content: left;
+  margin-left: 20px;
   gap: 20px;
 }
 
@@ -773,6 +774,7 @@ footer {
   width: 40px; 
   height: 40px;
   transition: transform 0.3s;
+  filter: invert(1);
 }
 
 #socials img:hover {
@@ -784,12 +786,12 @@ footer {
   font-size: 16px; 
   color: white; 
   display: inline-block;
-  align-self: center;
+  justify-content: right;
 }
 
 
 header {
-  background-color: #333; 
+  background-color: transparent; 
   padding: 10px 20px;
   position: fixed; 
   top: 0;
@@ -824,8 +826,8 @@ header {
 }
 
 #top-nav ul li a:hover {
-  background-color: #ffdd57; 
-  color: #333; 
+  background-color: #ffffff; 
+  color: #000000; 
 }
 
 
