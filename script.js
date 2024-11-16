@@ -98,7 +98,7 @@ const ctx = canvas.getContext('2d');
 
 let particlesArray = [];
 const particleCount = 10; 
-const maxRadius = 1; 
+const maxRadius = 1.4; 
 
 function resizeCanvas() {
     canvas.width = window.innerWidth;
@@ -117,7 +117,10 @@ class Particle {
     draw() {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = "white"; 
+        const randomColor = `rgb(${Math.floor(Math.random() * 256)}, 
+                            ${Math.floor(Math.random() * 256)}, 
+                            ${Math.floor(Math.random() * 256)})`;
+        ctx.fillStyle = randomColor; 
         ctx.fill();
     }
 
@@ -160,6 +163,8 @@ window.addEventListener('resize', () => {
 resizeCanvas();
 initParticles();
 animate();
+
+
 
 
 
