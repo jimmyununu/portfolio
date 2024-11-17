@@ -257,7 +257,7 @@ volumeControl.addEventListener('input', (e) => {
                     element.style.zIndex = "1000";
 
                     requestAnimationFrame(() => {
-                        element.style.transition = "transform 2.5s ease, opacity 2.5s ease";
+                        element.style.transition = "transform 7s ease, opacity 7s ease";
                         element.style.transform = `translate(${dx}px, ${dy}px) scale(0)`;
                         element.style.opacity = "0";
                     });
@@ -268,7 +268,7 @@ volumeControl.addEventListener('input', (e) => {
 
                         generateParticles(elementCenterX, elementCenterY);
                     }, 2500); 
-                }, index * 500); 
+                }, index * 300); 
             });
 
             if (visibleElements.size > 0) {
