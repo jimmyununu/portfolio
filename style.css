@@ -745,7 +745,7 @@ body, html {
   color: #fff; 
 }
 
-footer {
+footer.f1{
   position: fixed; 
   bottom: 0; 
   left: 0;
@@ -903,7 +903,7 @@ canvas {
 
 
 .content {
-  position: relative; /* Ensure transform works */
+  /*position: relative; /* Ensure transform works */
   transition: transform 1s ease, opacity 1s ease;
 }
 
@@ -983,12 +983,14 @@ canvas {
 
 #sound-controller {
   position: fixed;
-  bottom: 10px;
+  bottom: 40px;
   right: 10px;
   background-color: rgba(0, 0, 0, 0.8);
   color: white;
   padding: 10px;
   border-radius: 5px;
+  z-index: 1;
+  display: none;
 }
 #sound-controller button,
 #sound-controller input {

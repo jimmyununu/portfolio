@@ -45,9 +45,7 @@ const observer = new IntersectionObserver((entries) => {
         console.log(entry)
         if(entry.isIntersecting){
             entry.target.classList.add('show');
-        }//else {
-           // entry.target.classList.remove('show');
-        //}
+        }
     });
 });
 
@@ -171,6 +169,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const contentElements = document.querySelectorAll(".content");
     const canvas = document.getElementById("particle-canvas");
     const ctx = canvas.getContext("2d");
+    const soundController = document.getElementById('sound-controller');
 
     let currentSize = 50;
     const visibleElements = new Set();
@@ -197,19 +196,30 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
+    const audioElements = document.querySelectorAll('audio');
+    const playPauseButton = document.getElementById('play-pause');
+    const volumeControl = document.getElementById('volume');
+    audioElements.forEach(audio => (audio.volume = volumeControl.value));
+
+volumeControl.addEventListener('input', (e) => {
+    const volume = e.target.value;
+    audioElements.forEach(audio => (audio.volume = volume));
+  });
     contentElements.forEach((element) => observer.observe(element));
 
     blackHoleButton.addEventListener("click", () => {
+        soundController.style.display = 'block';
         blackHole.style.display = "block";
         blackHoleSound.play();
 
+
         const growBlackHole = () => {
-            let size = 50; // Initial size
+            let size = 50; 
             const maxSize = Math.min(window.innerWidth + 2000, window.innerHeight +2000); 
 
             function grow() {
                 if (size < maxSize) {
-                    size += .1; // Growth rate
+                    size += .1; 
                     blackHole.style.width = `${size}px`;
                     blackHole.style.height = `${size}px`;
                     blackHole.style.borderRadius = "50%"; 
@@ -236,28 +246,25 @@ document.addEventListener("DOMContentLoaded", () => {
                     const dx = screenCenterX - elementCenterX;
                     const dy = screenCenterY - elementCenterY;
 
-                    // Preserve initial position to prevent jumping
                     element.style.position = "fixed";
                     element.style.left = `${elementRect.left}px`;
                     element.style.top = `${elementRect.top}px`;
                     element.style.margin = "0";
                     element.style.zIndex = "1000";
 
-                    // Smoothly move element to the black hole center
                     requestAnimationFrame(() => {
                         element.style.transition = "transform 2.5s ease, opacity 2.5s ease";
                         element.style.transform = `translate(${dx}px, ${dy}px) scale(0)`;
                         element.style.opacity = "0";
                     });
 
-                    // Hide the element after animation
                     setTimeout(() => {
                         element.style.display = "none";
                         visibleElements.delete(element);
 
                         generateParticles(elementCenterX, elementCenterY);
-                    }, 2500); // Match animation duration
-                }, index * 500); // Stagger animation for each element
+                    }, 2500); 
+                }, index * 500); 
             });
 
             if (visibleElements.size > 0) {
@@ -265,7 +272,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         };
 
-        // Start sucking in elements
         suckInElements();
     });
 
@@ -308,30 +314,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
-// Array to hold all audio elements
-const audioElements = document.querySelectorAll('audio');
 
-// Get controller elements
-const playPauseButton = document.getElementById('play-pause');
-const volumeControl = document.getElementById('volume');
 
-// Set default volume
-audioElements.forEach(audio => (audio.volume = volumeControl.value));
 
-// Play or Pause all audio
-playPauseButton.addEventListener('click', () => {
-  if (playPauseButton.textContent === 'Play') {
-    audioElements.forEach(audio => audio.play());
-    playPauseButton.textContent = 'Pause';
-  } else {
-    audioElements.forEach(audio => audio.pause());
-    playPauseButton.textContent = 'Play';
-  }
-});
-volumeControl.addEventListener('input', (e) => {
-    const volume = e.target.value;
-    audioElements.forEach(audio => (audio.volume = volume));
-  });
+  
 
 
 
