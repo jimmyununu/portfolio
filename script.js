@@ -220,7 +220,7 @@ document.addEventListener("DOMContentLoaded", () => {
             grow();
         };
 
-        // Start growing the black hole
+    
         growBlackHole();
 
         const suckInElements = () => {
@@ -307,6 +307,31 @@ document.addEventListener("DOMContentLoaded", () => {
         requestAnimationFrame(animateParticles);
     }
 });
+
+// Array to hold all audio elements
+const audioElements = document.querySelectorAll('audio');
+
+// Get controller elements
+const playPauseButton = document.getElementById('play-pause');
+const volumeControl = document.getElementById('volume');
+
+// Set default volume
+audioElements.forEach(audio => (audio.volume = volumeControl.value));
+
+// Play or Pause all audio
+playPauseButton.addEventListener('click', () => {
+  if (playPauseButton.textContent === 'Play') {
+    audioElements.forEach(audio => audio.play());
+    playPauseButton.textContent = 'Pause';
+  } else {
+    audioElements.forEach(audio => audio.pause());
+    playPauseButton.textContent = 'Play';
+  }
+});
+volumeControl.addEventListener('input', (e) => {
+    const volume = e.target.value;
+    audioElements.forEach(audio => (audio.volume = volume));
+  });
 
 
 
