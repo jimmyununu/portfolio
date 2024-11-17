@@ -1025,12 +1025,11 @@ canvas {
   width: 100%; 
   border-radius: 10px; 
   display: block; 
-}
-
-img {
   max-width: 100%; 
   margin: 40px 0; 
 }
+
+
 
 #console-container2 {
   position: fixed;
