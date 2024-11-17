@@ -747,7 +747,7 @@ body, html {
 
 footer.f1{
   position: fixed; 
-  bottom: 0; 
+  bottom: 4%; 
   left: 0;
   width: 100%; 
   background-color: transparent; 
@@ -892,8 +892,6 @@ canvas {
 }
 
 
-
-/* Animation for sucking elements */
 @keyframes suckIn {
   to {
     transform: translate(-50%, -50%) scale(0);
@@ -903,7 +901,6 @@ canvas {
 
 
 .content {
-  /*position: relative; /* Ensure transform works */
   transition: transform 1s ease, opacity 1s ease;
 }
 
@@ -921,6 +918,7 @@ canvas {
   -webkit-user-select: none;
   touch-action: manipulation;
   top: 20px;
+  z-index: 1;
 }
 
 #blackHoleButton:before {
@@ -996,6 +994,66 @@ canvas {
 #sound-controller input {
   margin: 5px;
 }
+
+.secContainer {
+  display: none; 
+  position: fixed;
+  bottom: 2%; 
+  left: 5%; 
+  width: 20%; 
+  height: 100%; 
+  z-index: 20000;
+  overflow: hidden; 
+  border-radius: 10px; 
+  padding: 20px;
+}
+
+.scrollContent {
+  position: relative;
+  animation: scrollUp 80s linear 1; 
+}
+
+@keyframes scrollUp {
+  from {
+    transform: translateY(100%); 
+  }
+  to {
+    transform: translateY(-100%); 
+  }
+}
+.scrollContent img {
+  width: 100%; 
+  border-radius: 10px; 
+  display: block; 
+}
+
+img {
+  max-width: 100%; 
+  margin: 40px 0; 
+}
+
+#console-container2 {
+  position: fixed;
+  background: transparent; 
+  color: #d4d4d4; 
+  font-family: 'Courier New', Courier, monospace; 
+  font-size: 1rem;
+  padding: 1rem;
+  width: 80%;
+  max-width: 600px;
+  border-radius: 5px;
+  bottom: 10%; 
+  left: 50%; 
+  transform: translate(-50%, 0) scale(1); 
+  overflow: hidden; 
+  transition: transform 30s ease, opacity 30s ease;
+  text-align: left;
+  z-index: 0; 
+}
+
+
+
+
 
 
 
