@@ -1011,7 +1011,7 @@ canvas {
 
 .scrollContent {
   position: relative;
-  animation: scrollUp 80s linear 1; 
+  animation: scrollUp 80s infinite; 
 }
 
 @keyframes scrollUp {
